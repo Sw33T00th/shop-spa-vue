@@ -1,0 +1,89 @@
+<template>
+  <div>
+    <h1>Cart</h1>
+    <hr />
+    <div v-if="productsInCart.length" class="row">
+      <div class="col s9">
+        <div v-for = "product in productsInCart" :key = "product.id" class="section">
+          <h5>{{product.title | capitalize}}</h5>
+          <span>
+              <i @click = "remove(product.id)" class=" remove material-icons right">close</i>
+          </span>
+          <p>{{product.count}}pcs({{product.count * product.weight}}g) - {{product.count * product.price}}$</p>
+
+          <div class="divider"></div>
+        </div>
+      </div>
+      <div class="col s3 checkout">
+          <div class="row">
+            <p>
+                You have {{productsInCart.length}} items ({{getTotalWeight}}g)
+            </p>
+            <div class="divider"></div>
+            <h3>Total: {{getTotalSum}}$</h3>
+            <button class = "col s12 btn btn-large deep-orange darken-1">Checkout</button>
+          </div>
+          
+      </div>
+    </div>
+    <div v-else>
+      <h2 class="center-align">Cart is empty</h2>
+      <div class="row">
+        <router-link
+          class="col s6 offset-s3 center-align btn btn-large deep-orange darken-1"
+          to="/products"
+        >
+          Put in it something from here
+        </router-link>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import {mapGetters, mapActions} from 'vuex'
+export default {
+    methods: {
+        ...mapActions(['removeFromCart']),
+        remove(id){
+            this.removeFromCart(id);
+        }
+    },
+    computed: {
+        ...mapGetters(['productsInCart']),
+        getTotalSum(){
+            if(!this.productsInCart.length){
+                return 0;
+            }
+            return this.productsInCart.map(p => {
+                return p.count*p.price
+                }).reduce((accumulator,currentValue) =>{
+                   return accumulator + currentValue
+                })
+        },
+        getTotalWeight(){
+            if(!this.productsInCart.length){
+                return 0;
+            }
+            return this.productsInCart.map(p => {
+                return p.count*p.weight
+                }).reduce((accumulator,currentValue) =>{
+                   return accumulator + currentValue
+                })
+        }
+    },
+    filters: {
+    capitalize(value){
+      if (!value) return ''
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  },
+};
+</script>
+
+<style scoped>
+    .remove {
+        cursor: pointer;
+    }
+</style>
