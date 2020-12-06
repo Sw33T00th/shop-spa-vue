@@ -10,7 +10,7 @@
           <span class="card-title activator grey-text text-darken-4">
             {{ product.title | capitalize }}<i class="material-icons right">more_vert</i>
           </span>
-          <button @click = "addTo" class = "btn btn-small deep-orange darken-1">
+          <button @click = "addTo" class = " waves-effect waves-light btn btn-small deep-orange darken-1">
             <i class = "tiny material-icons">add_shopping_cart</i>
           </button>
         </div>
@@ -44,6 +44,7 @@ export default {
     ...mapActions(['addToCart']),
     addTo(){
       this.addToCart(this.product);
+      M.toast({html: 'Added to cart', classes: 'toast'})
     }
   }
 };
@@ -54,4 +55,10 @@ export default {
     .card-image {
         height: 150px;
     }
+
+    .toast {
+      right: 0;
+      bottom: 0;
+    }
+
 </style>

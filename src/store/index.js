@@ -48,7 +48,40 @@ export default new Vuex.Store({
     },
     productsInCart(state){
       return state.cart;
-    }
+    },
+    cartTotalSum(state){
+      if(!state.cart.length){
+          return 0;
+      }
+      return state.cart.map(p => {
+          return p.count*p.price;
+          }).reduce((accumulator,currentValue) =>{
+             return accumulator + currentValue;
+          });
+    },
+    cartTotalWeight(state){
+      if(!state.cart.length){
+          return 0;
+      }
+      return state.cart.map(p => {
+          return p.count*p.weight;
+          }).reduce((accumulator,currentValue) =>{
+             return accumulator + currentValue;
+          })
+      
+    },
+    cartTotalCount(state){
+      if(!state.cart.length){
+          return 0;
+      }
+      const count = state.cart.map(p => {
+        return p.count;
+        }).reduce((accumulator,currentValue) =>{
+           return accumulator + currentValue;
+        });
+      return 0 + count;
+      
+    },
   },
   modules: {
   }

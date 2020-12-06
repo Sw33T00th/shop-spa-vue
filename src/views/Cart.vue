@@ -6,10 +6,13 @@
       <div class="col s9">
         <div v-for = "product in productsInCart" :key = "product.id" class="section">
           <h5>{{product.title | capitalize}}</h5>
+          <span class = "price">
+            {{product.count * product.price}}$
+          </span>
           <span>
               <i @click = "remove(product.id)" class=" remove material-icons right">close</i>
           </span>
-          <p>{{product.count}}pcs({{product.count * product.weight}}g) - {{product.count * product.price}}$</p>
+          <p><strong>{{product.count}}</strong>pcs({{product.count * product.weight}}g)</p>
 
           <div class="divider"></div>
         </div>
@@ -17,10 +20,10 @@
       <div class="col s3 checkout">
           <div class="row">
             <p>
-                You have {{productsInCart.length}} items ({{getTotalWeight}}g)
+                You have {{cartTotalCount}} items ({{cartTotalWeight}}g)
             </p>
             <div class="divider"></div>
-            <h3>Total: {{getTotalSum}}$</h3>
+            <h3>Total: {{cartTotalSum}}$</h3>
             <button class = "col s12 btn btn-large deep-orange darken-1">Checkout</button>
           </div>
           
@@ -50,27 +53,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['productsInCart']),
-        getTotalSum(){
-            if(!this.productsInCart.length){
-                return 0;
-            }
-            return this.productsInCart.map(p => {
-                return p.count*p.price
-                }).reduce((accumulator,currentValue) =>{
-                   return accumulator + currentValue
-                })
-        },
-        getTotalWeight(){
-            if(!this.productsInCart.length){
-                return 0;
-            }
-            return this.productsInCart.map(p => {
-                return p.count*p.weight
-                }).reduce((accumulator,currentValue) =>{
-                   return accumulator + currentValue
-                })
-        }
+        ...mapGetters(['productsInCart','cartTotalSum','cartTotalWeight','cartTotalCount']),
     },
     filters: {
     capitalize(value){
@@ -85,5 +68,9 @@ export default {
 <style scoped>
     .remove {
         cursor: pointer;
+    }
+
+    .price {
+      font-size: 20px;
     }
 </style>
