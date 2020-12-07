@@ -44,10 +44,10 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 export default {
     methods: {
-        ...mapActions(['removeFromCart']),
+        ...mapMutations(['removeFromCart']),
         remove(id){
             this.removeFromCart(id);
         }
