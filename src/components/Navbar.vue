@@ -1,29 +1,48 @@
 <template>
-  <nav class="blue-grey darken-1">
-    <div class="nav-wrapper">
-      <router-link to="/" class="brand-logo">My Grocery</router-link>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <router-link to="/Products" tag="li" exact active-class="active">
-          <a href="#"><i class="material-icons">kitchen</i></a>
-        </router-link>
-        <router-link to="/Cart" tag="li" active-class="active">
-          <a href="#"
-            ><span v-show="productsInCart.length" class="myCounter"
-              ><p>{{ cartTotalCount }}</p></span
-            ><i class="cart material-icons">shopping_cart </i></a
-          >
-        </router-link>
-      </ul>
-    </div>
-  </nav>
+  <div>
+    <nav class="blue-grey darken-1">
+      <div class="nav-wrapper">
+        <router-link to="/" class="brand-logo">My Grocery</router-link>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <router-link to="/Products" tag="li" exact active-class="active">
+            <a href="#"><i class="material-icons">kitchen</i></a>
+          </router-link>
+          <router-link to="/Cart" tag="li" active-class="active">
+            <a href="#"
+              ><span v-show="productsInCart.length" class="myCounter"
+                ><p>{{ cartTotalCount }}</p></span
+              ><i class="cart material-icons">shopping_cart </i></a
+            >
+          </router-link>
+        </ul>
+      </div>
+    </nav>
+
+    <ul class="sidenav" ref = "sidenav" id="mobile-demo">
+      <router-link to="/Products" tag="li" exact active-class="active">
+        <a href="#"><i class="material-icons">kitchen</i></a>
+      </router-link>
+      <router-link to="/Cart" tag="li" active-class="active">
+        <a href="#"
+          ><i class="cart material-icons">shopping_cart <span v-show="productsInCart.length" class="myCounter"
+            ><p>{{ cartTotalCount }}</p></span
+          > </i></a
+        >
+      </router-link>
+    </ul>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 export default {
-  
-  computed: mapGetters(['productsInCart','cartTotalCount']),
- 
+  computed: mapGetters(["productsInCart", "cartTotalCount"]),
+  mounted(){
+    M.Sidenav.init(this.$refs.sidenav);
+  }
 };
 </script>
 

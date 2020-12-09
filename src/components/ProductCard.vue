@@ -22,7 +22,7 @@
           <button @click = "decrement" class="btn btn-small arrow">
             <i class="tiny material-icons">keyboard_arrow_left</i>
           </button>
-          <span class="count">{{ getProductInCartById.count }}</span>
+          <span class="count">{{getProductInCartById.count}}</span>
           <button @click = "increment" class="btn btn-small arrow">
             <i class="tiny material-icons">keyboard_arrow_right</i>
           </button>
@@ -55,22 +55,23 @@ export default {
   },
   methods: {
     ...mapActions([""]),
-    ...mapMutations(['getTotalCount','addToCart','incrementCount','decrementCount']),
+    ...mapMutations(['addToCart','incrementCount','decrementCount']),
     addTo() {
       this.addToCart(this.product);
-      this.getTotalCount();
       M.toast({ html: "Added to cart", classes: "toast" });
-      console.log(this.getProductInCartById);
+     
     },
     increment(){
-      this.incrementCount(this.product)
+      this.incrementCount(this.product);
+
     },
     decrement(){
       this.decrementCount(this.product)
+
     },
   },
   computed: {
-    ...mapGetters(["getProductInCart"]),
+    ...mapGetters(["getProductInCart",'getProductCount']),
     getProductInCartById() {
       return this.getProductInCart(this.product.id);
     },
